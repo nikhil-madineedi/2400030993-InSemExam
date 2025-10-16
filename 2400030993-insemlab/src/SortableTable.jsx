@@ -10,36 +10,36 @@ const SortableTable = () => {
   ];
 
   const [employees] = useState(initialData);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+  const [employee, setEmployee] = useState({ key: null, direction: 'ascending' });
 
   const sortedEmployees = useMemo(() => {
     let sortableItems = [...employees];
-    if (sortConfig.key !== null) {
+    if (employee.key !== null) {
       sortableItems.sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? -1 : 1;
+        if (a[employee.key] < b[employee.key]) {
+          return employee.direction === 'ascending' ? -1 : 1;
         }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? 1 : -1;
+        if (a[employee.key] > b[employee.key]) {
+          return employee.direction === 'ascending' ? 1 : -1;
         }
         return 0;
       });
     }
     return sortableItems;
-  }, [employees, sortConfig]);
+  }, [employees, employee]);
 
   const requestSort = (key) => {
     let direction = 'ascending';
-    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+    if (employee.key === key && employee.direction === 'ascending') {
       direction = 'descending';
     }
-    setSortConfig({ key, direction });
+    setEmployee({ key, direction });
   };
 
   return (
     <div className="table-container">
-        <center>
-      <h2>Employee Data</h2>
+      <center>
+        <h2>Employee Data</h2>
       </center>
       <table>
         <thead>
@@ -50,11 +50,11 @@ const SortableTable = () => {
           </tr>
         </thead>
         <tbody>
-          {sortedEmployees.map((employee, index) => (
+          {sortedEmployees.map((employeeItem, index) => (
             <tr key={index}>
-              <td>{employee.name}</td>
-              <td>{employee.department}</td>
-              <td>${employee.salary.toLocaleString()}</td>
+              <td>{employeeItem.name}</td>
+              <td>{employeeItem.department}</td>
+              <td>${employeeItem.salary.toLocaleString()}</td>
             </tr>
           ))}
         </tbody>
